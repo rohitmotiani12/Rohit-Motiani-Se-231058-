@@ -1,55 +1,110 @@
 public class DLL {
-    public class Node {
-        String data;
+    public static class Node{
+        int data;
         Node next;
-        Node prev;         // newly addded this
-
-        Node(String data) {
-            this.data = data;
-            this.next = null;
-            this.prev  = null;// newly addded this
+        Node prev;
+        Node(int data){
+            this.data=data;
+            this.next=null;
+            this.prev=null;
         }
     }
-
-    Node head;
-
-    public void addF(String data) {
-        Node newNode = new Node(data);
-        if (head == null) {
-            head = newNode;
-            return;
+    public static void DisplayAll(Node Head){
+        Node temp=Head;
+        while (temp != null){
+            System.out.print(temp.data + " ");
+            temp= temp.next;
         }
-        newNode.next = head;
-        head.prev=newNode; // newly addded this
-        head = newNode;
+        System.out.println();
     }
-
-
-
-
-
-
-    public void  print() {
-        Node current = head;
-        if (head == null) {
-            System.out.println("list is empty");
-            return ;
+    public static void DisplayReverse(Node tail){
+        Node temp=tail;
+        while (temp != null){
+            System.out.print(temp.data + " ");
+            temp= temp.prev;
         }
-        while (current != null) {
-            System.out.print(current.data + "<->");
-            current = current.next;
+        System.out.println();
+    }
+    public static void DisplayRandom(Node random){
+        Node temp= random;
+        while(temp.prev != null){
+            temp = temp.prev;
         }
-        System.out.println("<->Null");
+        while(temp != null){
+            System.out.print(temp.data +" ");
+            temp=temp.next;
+        }
+        System.out.println();
+    }
+    public static Node insertAtHead(Node head, int x){
+        Node tem=new Node(x);
+        tem.next=head;
+        head.prev=tem;
+        head=tem;
+        return head;
+    }
+    public static void intertAtTail(Node head, int x){
+        Node tem=head;
+        while(tem.next != null){
+            tem= tem.next;
+        }
+        Node t= new Node(x);
+        tem.next= t;
+        t.prev=tem;
 
+    }
+    public static void insertAtIndex(Node head, int index,int x){
+        Node s = head;
+        for (int i=1; i<=index-1; i++){
+            s=s.next;
+        }
+        Node r=s.next;
+        Node tem= new Node(x);
+        s.next = tem;
+        tem.prev = s;
+        tem.next =r;
+        r.prev = tem;
+    }
+    public static void deleteHead(Node head){
+        head = head.next;
+        head.prev=null;
+    }
+    public static Node deleteTail(Node head ,Node tail){
+        if (tail == null) {
+            System.out.println("List is empty, cannot delete tail");
+            return null;
+        }
+        Node newTail = tail.prev;
+        if (newTail != null) {
+            newTail.next = null;
+        }
+        return newTail;
+    }
+    public static void main(String[] args) {
+        Node a=new Node(4);
+        Node b=new Node(10);
+        Node c=new Node(2);
+        Node d=new Node(99);
+        Node e=new Node(13);
+        a.next=b;
+        b.prev=a;
+        b.next=c;
+        c.prev=b;
+        c.next=d;
+        d.prev=c;
+        d.next=e;
+        e.prev=d;
+        DisplayAll(a);
+        DisplayReverse(e);
+        DisplayRandom(c);
+        DisplayAll(insertAtHead(a,30));
+        intertAtTail(a,90);
+        DisplayAll(a);
+        insertAtIndex(a,3,56);
+        DisplayAll(a);
+        deleteHead(b);
+        DisplayAll(b);
+        DisplayAll(a);
+
+    }
 }
-    public static void main (String args[]){
-        DLL  l =new DLL();
-        l.addF("a");
-        l.addF("is");
-        l.addF("this ");
-        l.print();
-
-    }
-}
-// this is basic code of douboy linked list
-//  ye code single linked lsit wala h just isme
